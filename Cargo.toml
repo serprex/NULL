@@ -1,0 +1,11 @@
+[package]
+name = "NULL"
+version = "1.0.0"
+authors = ["serprex"]
+description = "Interpreter for the NULL language"
+repository = "https://github.com/serprex/NULL"
+
+[dependencies]
+num = { version = "0.1.36", default-features = false, features = ["bigint"] }
+primal-sieve = "0.2.6"
+
