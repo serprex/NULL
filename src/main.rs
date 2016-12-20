@@ -24,14 +24,16 @@ fn main() {
 	};
 	let mut y = BigUint::one();
 	let mut primes = PrimeBag::new();
+	let mut pidx = 0;
 	let mut qs = [VecDeque::new(), VecDeque::new(), VecDeque::new()];
 	let mut qi = 0;
 	let mut out = io::stdout();
 	let sin = io::stdin();
 	let mut sinb = sin.bytes();
-	let i255 = BigUint::from(255u8);
-	loop {
-		match primes.minprime(&mut x, &mut y) {
+	let n255 = BigUint::from(255u8);
+	let n2 = BigUint::from(2u8);
+	while x >= n2 {
+		match primes.minprime(&mut pidx, &mut x, &mut y) {
 			0 => qi = if qi == 2 { 0 } else { qi + 1 },
 			1 => qi = if qi == 0 { 2 } else { qi - 1 },
 			2 => { out.write(&[*qs[qi].front().unwrap_or(&0)]).ok(); },
@@ -54,7 +56,7 @@ fn main() {
 					y = y + ysb;
 				},
 			6 => {
-				let y255 = (&y & &i255).to_u8().unwrap();
+				let y255 = (&y & &n255).to_u8().unwrap();
 				if let Some(ys) = qs[qi].front_mut() {
 					*ys = ys.wrapping_add(y255);
 					continue
@@ -72,7 +74,7 @@ fn main() {
 			},
 			9 => { qs[qi].pop_front(); },
 			10 => {
-				let y255 = (&y & &i255).to_u8().unwrap();
+				let y255 = (&y & &n255).to_u8().unwrap();
 				qs[qi].push_back(y255);
 			},
 			11 => {
@@ -80,11 +82,14 @@ fn main() {
 					*x == 0
 				} else {
 					true
-				} {
-					primes.minprime(&mut x, &mut y);
+				} && x >= n2 {
+					primes.minprime(&mut pidx, &mut x, &mut y);
 				}
 			},
-			12 => mem::swap(&mut x, &mut y),
+			12 => {
+				mem::swap(&mut x, &mut y);
+				pidx = 0;
+			},
 			13 => return,
 			_ => unreachable!(),
 		}
