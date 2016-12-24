@@ -1,5 +1,8 @@
 #![allow(non_snake_case)]
-extern crate num;
+
+extern crate num_bigint;
+extern crate num_traits;
+extern crate num_integer;
 extern crate primal_sieve;
 mod primes;
 
@@ -8,7 +11,8 @@ use std::env;
 use std::io::{self, Read, Write};
 use std::fs;
 use std::mem;
-use num::{BigUint, One, Zero, ToPrimitive, CheckedSub};
+use num_bigint::BigUint;
+use num_traits::{One, Zero, ToPrimitive, CheckedSub};
 use primes::PrimeBag;
 
 fn main() {

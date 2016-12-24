@@ -1,4 +1,6 @@
-use num::{BigUint, Integer, Zero};
+use num_bigint::BigUint;
+use num_integer::Integer;
+use num_traits::Zero;
 use primal_sieve::Primes;
 
 pub struct PrimeBag {

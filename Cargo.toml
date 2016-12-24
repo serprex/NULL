@@ -1,12 +1,16 @@
 [package]
 name = "NULL"
-version = "1.0.0"
+version = "1.0.1"
 authors = ["serprex"]
 description = "Interpreter for the NULL language"
 repository = "https://github.com/serprex/NULL"
 license = "MIT"
 
 [dependencies]
-num = { version = "0.1.36", default-features = false, features = ["bigint"] }
+num-bigint = { version = "0.1.35", default-features = false }
+num-integer = "0.1.32"
+num-traits = "0.1.36"
 primal-sieve = "0.2.6"
 
+[profile.release]
+panic = "abort"
