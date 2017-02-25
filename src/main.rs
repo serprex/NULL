@@ -29,8 +29,7 @@ fn main() {
 	let mut y = BigUint::one();
 	let mut primes = PrimeBag::new();
 	let mut pidx = 0;
-	let mut qs = [VecDeque::new(), VecDeque::new(), VecDeque::new()];
-	let mut qi = 0;
+	let mut qs = (VecDeque::new(), VecDeque::new(), VecDeque::new());
 	let mut out = io::stdout();
 	let sin = io::stdin();
 	let mut sinb = sin.bytes();
@@ -38,51 +37,51 @@ fn main() {
 	let n2 = BigUint::from(2u8);
 	while x >= n2 {
 		match primes.minprime(&mut pidx, &mut x, &mut y) {
-			0 => qi = if qi == 2 { 0 } else { qi + 1 },
-			1 => qi = if qi == 0 { 2 } else { qi - 1 },
-			2 => { out.write(&[*qs[qi].front().unwrap_or(&0)]).ok(); },
+			0 => qs = (qs.1, qs.2, qs.0),
+			1 => qs = (qs.2, qs.0, qs.1),
+			2 => { out.write(&[*qs.0.front().unwrap_or(&0)]).ok(); },
 			3 =>
 				if let Some(Ok(b)) = sinb.next() {
-					if let Some(bm) = qs[qi].back_mut() {
+					if let Some(bm) = qs.0.back_mut() {
 						*bm = b;
 						continue
 					}
-					qs[qi].push_back(b);
+					qs.0.push_back(b);
 				},
 			4 =>
-				if let Some(ys) = qs[qi].front() {
+				if let Some(ys) = qs.0.front() {
 					let ysb = BigUint::from(*ys);
 					y = y.checked_sub(&ysb).unwrap_or_else(BigUint::zero);
 				},
 			5 =>
-				if let Some(ys) = qs[qi].front() {
+				if let Some(ys) = qs.0.front() {
 					let ysb = BigUint::from(*ys);
 					y = y + ysb;
 				},
 			6 => {
 				let y255 = (&y & &n255).to_u8().unwrap();
-				if let Some(ys) = qs[qi].front_mut() {
+				if let Some(ys) = qs.0.front_mut() {
 					*ys = ys.wrapping_add(y255);
 					continue
 				}
-				qs[qi].push_back(y255);
+				qs.0.push_back(y255);
 			},
 			7 => {
-				let b = qs[qi].pop_front().unwrap_or(0);
-				qs[if qi == 2 { 0 } else { qi + 1 }].push_back(b);
+				let b = qs.0.pop_front().unwrap_or(0);
+				qs.1.push_back(b);
 			},
 			8 => {
-				let b = qs[qi].pop_front().unwrap_or(0);
-				qs[if qi == 0 { 2 } else { qi - 1 }].push_back(b);
+				let b = qs.0.pop_front().unwrap_or(0);
+				qs.2.push_back(b);
 
 			},
-			9 => { qs[qi].pop_front(); },
+			9 => { qs.0.pop_front(); },
 			10 => {
 				let y255 = (&y & &n255).to_u8().unwrap();
-				qs[qi].push_back(y255);
+				qs.0.push_back(y255);
 			},
 			11 => {
-				if if let Some(x) = qs[qi].front() {
+				if if let Some(x) = qs.0.front() {
 					*x == 0
 				} else {
 					true
