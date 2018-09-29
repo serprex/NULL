@@ -1,19 +1,19 @@
 #![allow(non_snake_case)]
 
 extern crate num_bigint;
-extern crate num_traits;
 extern crate num_integer;
+extern crate num_traits;
 extern crate primal_sieve;
 mod primes;
 
+use num_bigint::BigUint;
+use num_traits::{CheckedSub, One, ToPrimitive, Zero};
+use primes::PrimeBag;
 use std::collections::VecDeque;
 use std::env;
-use std::io::{self, Read, Write};
 use std::fs;
+use std::io::{self, Read, Write};
 use std::mem;
-use num_bigint::BigUint;
-use num_traits::{One, Zero, ToPrimitive, CheckedSub};
-use primes::PrimeBag;
 
 fn main() {
 	let mut x = if let Some(a) = env::args().nth(1) {
@@ -24,7 +24,7 @@ fn main() {
 		BigUint::parse_bytes(&num, 10).unwrap()
 	} else {
 		println!("NULL [filename]");
-		return
+		return;
 	};
 	let mut y = BigUint::one();
 	let mut primes = PrimeBag::new();
@@ -39,60 +39,61 @@ fn main() {
 		match primes.minprime(&mut pidx, &mut x, &mut y) {
 			0 => qs = (qs.1, qs.2, qs.0),
 			1 => qs = (qs.2, qs.0, qs.1),
-			2 => { out.write(&[*qs.0.front().unwrap_or(&0)]).ok(); },
-			3 =>
-				if let Some(Ok(b)) = sinb.next() {
-					if let Some(bm) = qs.0.back_mut() {
-						*bm = b;
-						continue
-					}
-					qs.0.push_back(b);
-				},
-			4 =>
-				if let Some(ys) = qs.0.front() {
-					let ysb = BigUint::from(*ys);
-					y = y.checked_sub(&ysb).unwrap_or_else(BigUint::zero);
-				},
-			5 =>
-				if let Some(ys) = qs.0.front() {
-					let ysb = BigUint::from(*ys);
-					y = y + ysb;
-				},
+			2 => {
+				out.write(&[*qs.0.front().unwrap_or(&0)]).ok();
+			}
+			3 => if let Some(Ok(b)) = sinb.next() {
+				if let Some(bm) = qs.0.back_mut() {
+					*bm = b;
+					continue;
+				}
+				qs.0.push_back(b);
+			},
+			4 => if let Some(ys) = qs.0.front() {
+				let ysb = BigUint::from(*ys);
+				y = y.checked_sub(&ysb).unwrap_or_else(BigUint::zero);
+			},
+			5 => if let Some(ys) = qs.0.front() {
+				let ysb = BigUint::from(*ys);
+				y = y + ysb;
+			},
 			6 => {
 				let y255 = (&y & &n255).to_u8().unwrap();
 				if let Some(ys) = qs.0.front_mut() {
 					*ys = ys.wrapping_add(y255);
-					continue
+					continue;
 				}
 				qs.0.push_back(y255);
-			},
+			}
 			7 => {
 				let b = qs.0.pop_front().unwrap_or(0);
 				qs.1.push_back(b);
-			},
+			}
 			8 => {
 				let b = qs.0.pop_front().unwrap_or(0);
 				qs.2.push_back(b);
-
-			},
-			9 => { qs.0.pop_front(); },
+			}
+			9 => {
+				qs.0.pop_front();
+			}
 			10 => {
 				let y255 = (&y & &n255).to_u8().unwrap();
 				qs.0.push_back(y255);
-			},
+			}
 			11 => {
 				if if let Some(x) = qs.0.front() {
 					*x == 0
 				} else {
 					true
-				} && x >= n2 {
+				} && x >= n2
+				{
 					primes.minprime(&mut pidx, &mut x, &mut y);
 				}
-			},
+			}
 			12 => {
 				mem::swap(&mut x, &mut y);
 				pidx = 0;
-			},
+			}
 			13 => return,
 			_ => unreachable!(),
 		}

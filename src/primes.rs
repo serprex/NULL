@@ -28,7 +28,7 @@ impl PrimeBag {
 			if rem.is_zero() {
 				*x = div;
 				*y = &*y * p;
-				return *idx % 14
+				return *idx % 14;
 			}
 			*idx += 1;
 		}
