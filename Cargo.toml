@@ -1,6 +1,6 @@
 [package]
 name = "NULL"
-version = "1.0.1"
+version = "1.1.0"
 authors = ["serprex"]
 description = "Interpreter for the NULL language"
 repository = "https://github.com/serprex/NULL"
