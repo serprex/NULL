@@ -7,10 +7,10 @@ repository = "https://github.com/serprex/NULL"
 license = "MIT"
 
 [dependencies]
-num-bigint = { version = "0.2.0", features = ['std'], default-features = false }
-num-integer = "0.1.39"
-num-traits = "0.2.6"
-primal-sieve = "0.2.9"
+num-bigint = { version = "0.3.0", features = ['std'], default-features = false }
+num-integer = "0.1.43"
+num-traits = "0.2.12"
+primal-sieve = "0.3.1"
 
 [profile.release]
 panic = "abort"
