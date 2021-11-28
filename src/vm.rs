@@ -3,7 +3,7 @@ use std::io::{Read, Write};
 use std::mem;
 use num_bigint::BigUint;
 use num_traits::{CheckedSub, One, ToPrimitive, Zero};
-use primes::PrimeBag;
+use crate::primes::PrimeBag;
 
 pub fn run<R, W>(mut x: BigUint, input: R, mut out: W)
 	where R: Read, W: Write

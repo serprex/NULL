@@ -1,9 +1,5 @@
 #![allow(non_snake_case)]
 
-extern crate num_bigint;
-extern crate num_integer;
-extern crate num_traits;
-extern crate primal_sieve;
 mod primes;
 mod vm;
 

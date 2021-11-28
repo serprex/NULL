@@ -1,13 +1,14 @@
 [package]
 name = "NULL"
-version = "1.1.0"
+version = "1.2.0"
 authors = ["serprex"]
 description = "Interpreter for the NULL language"
 repository = "https://github.com/serprex/NULL"
 license = "MIT"
+edition = "2021"
 
 [dependencies]
-num-bigint = { version = "0.3.0", features = ['std'], default-features = false }
+num-bigint = { version = "0.4.3", features = ['std'], default-features = false }
 num-integer = "0.1.43"
 num-traits = "0.2.12"
 primal-sieve = "0.3.1"

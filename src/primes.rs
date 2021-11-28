@@ -20,14 +20,13 @@ impl PrimeBag {
 		loop {
 			let len = self.prev.len();
 			if *idx == len {
-				let p = BigUint::from(self.pit.next().unwrap());
-				self.prev.push(p);
+				self.prev.push(BigUint::from(self.pit.next().unwrap()));
 			}
 			let p = &self.prev[*idx];
 			let (div, rem) = x.div_rem(p);
 			if rem.is_zero() {
 				*x = div;
-				*y = &*y * p;
+				*y *= p;
 				return *idx % 14;
 			}
 			*idx += 1;
