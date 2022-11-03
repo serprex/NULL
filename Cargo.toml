@@ -8,10 +8,10 @@ license = "MIT"
 edition = "2021"
 
 [dependencies]
-num-bigint = { version = "0.4.3", features = ['std'], default-features = false }
-num-integer = "0.1.43"
-num-traits = "0.2.12"
-primal-sieve = "0.3.1"
+num-bigint = { version = "0.4", default-features = false }
+num-integer = "0.1"
+num-traits = "0.2"
+primal-sieve = "0.3"
 
 [profile.release]
 panic = "abort"
