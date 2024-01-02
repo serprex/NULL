@@ -1,6 +1,7 @@
 use std::collections::VecDeque;
 use std::io::{Read, Write};
 use std::mem;
+use std::hint::unreachable_unchecked;
 use num_bigint::BigUint;
 use num_traits::{CheckedSub, One, ToPrimitive, Zero};
 use crate::primes::PrimeBag;
@@ -75,7 +76,7 @@ pub fn run<R, W>(mut x: BigUint, input: R, mut out: W)
 				pidx = 0;
 			}
 			13 => return,
-			_ => unreachable!(),
+			_ => unsafe { unreachable_unchecked() },
 		}
 	}
 }
